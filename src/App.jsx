@@ -3,11 +3,14 @@ import { Toaster } from 'react-hot-toast';
 import { createBrowserRouter, Outlet } from "react-router"
 import { RouterProvider } from 'react-router';
 
+import { Provider } from 'react-redux'
+
 import Header from './components/header';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import { store } from './store/store';
 
 function Layout() {
   return (
@@ -49,8 +52,11 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
-      <Toaster />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+        <Toaster />
+
+      </Provider>
     </>
   )
 }
