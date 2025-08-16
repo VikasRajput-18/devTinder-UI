@@ -3,12 +3,16 @@ import { Button } from './components/ui/button'
 import Header from './components/header';
 import { createBrowserRouter, Outlet } from "react-router"
 import { RouterProvider } from 'react-router';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 
 function Layout() {
   return (
     <>
       <Header />
-      <main className="bg-card-foreground min-h-screen w-full">
+      <main className="">
         <Outlet /> {/* <- child routes will render here */}
       </main>
     </>
@@ -22,15 +26,21 @@ const router = createBrowserRouter([
     children: [
       {
         index: true, // default route "/"
-        element:
-          <p className='text-white'>Hi My Name is Viaks</p>
-
+        element: <Home />
+      },
+      {
+        path: "profile",
+        element: <Profile />
       }
     ]
   },
   {
+    path: "/sign-in",
+    element: <Login />
+  },
+  {
     path: "/sign-up",
-    element: <div>Sign Up</div>
+    element: <Signup />
   },
 ])
 
