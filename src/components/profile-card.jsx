@@ -6,8 +6,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
-const ProfileCard = ({ firstName, lastName, photoUrl, _id }) => {
-    console.log(firstName, lastName, photoUrl, _id)
+const ProfileCard = ({ firstName, lastName, photoUrl }) => {
     return (
         <Card className="bg-accent-foreground  text-white border-neutral-600 shadow-2xl p-2 min-w-sm">
             <CardContent className="p-0">

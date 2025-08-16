@@ -29,8 +29,6 @@ const Home = () => {
         getFeed()
     }, [])
 
-    console.log(profiles)
-
     if (isLoading) {
         return (
             <div className="flex items-center justify-center">
