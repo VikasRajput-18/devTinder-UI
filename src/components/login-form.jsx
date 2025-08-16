@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
+import toast from 'react-hot-toast'
+import { axiosInstance } from '../axios/interceptor'
 
 const LoginForm = () => {
     const [loginFormData, setLoginFormData] = useState({
         email: "",
         password: ""
     })
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -16,7 +19,17 @@ const LoginForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(loginFormData)
+        setIsLoading(true)
+        try {
+            const response = await axiosInstance.post(`/api/sign-in`, loginFormData)
+
+            toast.success(response.data.message)
+        } catch (error) {
+            console.log(error)
+            toast.error(error.response.data.message)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
 
@@ -32,7 +45,7 @@ const LoginForm = () => {
                         vaue={loginFormData.email}
                         onChange={handleChange}
                         placeholder="m@example.com"
-                        required
+                        required disabled={isLoading}
 
                     />
                 </div>
@@ -50,11 +63,11 @@ const LoginForm = () => {
                         name="password"
                         vaue={loginFormData.password}
                         onChange={handleChange}
-                        placeholder="******" required />
+                        placeholder="******" required disabled={isLoading} />
                 </div>
             </div>
-            <Button type="submit" className="w-full mt-4 cursor-pointer">
-                Login
+            <Button type="submit" className="w-full mt-4 cursor-pointer" disabled={isLoading}>
+                {isLoading ? "Loading..." : "Login"}
             </Button>
         </form>
     )

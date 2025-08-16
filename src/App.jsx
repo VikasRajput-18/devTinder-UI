@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button } from './components/ui/button'
-import Header from './components/header';
+import { Toaster } from 'react-hot-toast';
 import { createBrowserRouter, Outlet } from "react-router"
 import { RouterProvider } from 'react-router';
+
+import Header from './components/header';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
@@ -49,6 +50,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <Toaster />
     </>
   )
 }
