@@ -1,16 +1,45 @@
 import React from 'react'
 import { Button } from './components/ui/button'
-import Header from './components/header'
+import Header from './components/header';
+import { createBrowserRouter, Outlet } from "react-router"
+import { RouterProvider } from 'react-router';
+
+function Layout() {
+  return (
+    <>
+      <Header />
+      <main className="bg-card-foreground min-h-screen w-full">
+        <Outlet /> {/* <- child routes will render here */}
+      </main>
+    </>
+  );
+}
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true, // default route "/"
+        element:
+          <p className='text-white'>Hi My Name is Viaks</p>
+
+      }
+    ]
+  },
+  {
+    path: "/sign-up",
+    element: <div>Sign Up</div>
+  },
+])
 
 function App() {
 
   return (
-    <section className="bg-card-foreground h-screen w-full">
-      <Header />
-      <div className="flex flex-wrap items-center gap-2 md:flex-row">
-        <Button>Button</Button>
-      </div>
-    </section>
+    <>
+      <RouterProvider router={router} />
+    </>
   )
 }
 
