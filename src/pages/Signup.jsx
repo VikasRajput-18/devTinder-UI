@@ -1,9 +1,9 @@
-import React from 'react'
+import AuthForm from "../components/auth-form"
 
-const Signup = () => {
+export default function Signup() {
   return (
-    <div>Signup</div>
+    <section className="h-screen flex items-center justify-center">
+      <AuthForm title={"Register new account"} description={"Enter your details below to create your account"} routeTo={"/sign-in"} />
+    </section>
   )
 }
-
-export default Signup

@@ -1,9 +1,9 @@
-import React from 'react'
+import AuthForm from "../components/auth-form"
 
-const Login = () => {
+export default function Login() {
   return (
-    <div>Login</div>
+    <section className="h-screen flex items-center justify-center">
+      <AuthForm title={"Login to your account"} description={"Enter your email below to login to your account"} routeTo={"/sign-up"} />
+    </section>
   )
 }
-
-export default Login
