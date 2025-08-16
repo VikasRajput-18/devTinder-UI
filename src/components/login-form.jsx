@@ -4,8 +4,10 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../axios/interceptor'
+import { useNavigate } from 'react-router'
 
 const LoginForm = () => {
+    const navigate = useNavigate()
     const [loginFormData, setLoginFormData] = useState({
         email: "",
         password: ""
@@ -23,7 +25,10 @@ const LoginForm = () => {
         try {
             const response = await axiosInstance.post(`/api/sign-in`, loginFormData)
 
-            toast.success(response.data.message)
+            if (response.status === 200) {
+                toast.success(response.data.message)
+                navigate("/")
+            }
         } catch (error) {
             console.log(error)
             toast.error(error.response.data.message)
