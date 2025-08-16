@@ -43,7 +43,7 @@ const LoginForm = () => {
 
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete='off'>
             <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
@@ -54,7 +54,7 @@ const LoginForm = () => {
                         vaue={loginFormData.email}
                         onChange={handleChange}
                         placeholder="m@example.com"
-                        required disabled={isLoading}
+                        required disabled={isLoading} autoComplete="off"
 
                     />
                 </div>
@@ -72,7 +72,7 @@ const LoginForm = () => {
                         name="password"
                         vaue={loginFormData.password}
                         onChange={handleChange}
-                        placeholder="******" required disabled={isLoading} />
+                        placeholder="******" required disabled={isLoading} autoComplete="off" />
                 </div>
             </div>
             <Button type="submit" className="w-full mt-4 cursor-pointer" disabled={isLoading}>
