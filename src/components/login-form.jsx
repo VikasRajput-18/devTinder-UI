@@ -5,6 +5,8 @@ import { Button } from './ui/button'
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../axios/interceptor'
 import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { addUser } from '../store/slices/userSlice'
 
 const LoginForm = () => {
     const navigate = useNavigate()
@@ -12,6 +14,7 @@ const LoginForm = () => {
         email: "",
         password: ""
     })
+    const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (e) => {
@@ -27,6 +30,7 @@ const LoginForm = () => {
 
             if (response.status === 200) {
                 toast.success(response.data.message)
+                dispatch(addUser(response.data.data))
                 navigate("/")
             }
         } catch (error) {
