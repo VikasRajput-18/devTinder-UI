@@ -10,7 +10,6 @@ function Layout() {
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log("user", user)
 
     const fetchProfile = async () => {
         try {
@@ -19,20 +18,22 @@ function Layout() {
 
         } catch (error) {
             console.error(error)
-            if (error.response.status === 401) {
+            if (error.response?.status === 401) {
                 navigate("/sign-in")
             }
         }
     }
 
     useEffect(() => {
-        fetchProfile()
+        if (!user) {
+            fetchProfile()
+        }
     }, [])
 
     return (
         <>
             <Header />
-            <main className="">
+            <main className="container mx-auto px-8 sm:px-0 py-12">
                 <Outlet /> {/* <- child routes will render here */}
             </main>
         </>

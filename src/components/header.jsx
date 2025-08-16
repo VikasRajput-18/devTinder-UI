@@ -1,20 +1,23 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { LogOut, UserRound } from 'lucide-react';
 
 import { Link, useNavigate } from "react-router"
 import toast from 'react-hot-toast';
 import { axiosInstance } from '../axios/interceptor';
+import { removeUser } from '../store/slices/userSlice';
 
 const Header = () => {
     const user = useSelector((state) => state.user)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleLogout = async () => {
         try {
             const response = await axiosInstance.post(`/api/logout`);
             if (response.status === 200) {
+                dispatch(removeUser())
                 toast.success(response.data.message)
                 navigate("/sign-in")
             }
@@ -25,7 +28,9 @@ const Header = () => {
 
     return (
         <header className='py-4 bg-accent-foreground px-8 flex items-center justify-between'>
-            <h2 className='text-white text-3xl font-bold'>👨‍💻Dev Tinder</h2>
+            <h2 className='text-white text-3xl font-bold'>
+                <Link to={"/"}>👨‍💻Dev Tinder</Link>
+            </h2>
 
             {
                 user ?
