@@ -1,11 +1,16 @@
 import React from 'react'
+import { Button } from './components/ui/button'
+import Header from './components/header'
 
 function App() {
 
   return (
-    <>
-      <h1 className="text-xl text-red-400">Hello World</h1>
-    </>
+    <section className="bg-card-foreground h-screen w-full">
+      <Header />
+      <div className="flex flex-wrap items-center gap-2 md:flex-row">
+        <Button>Button</Button>
+      </div>
+    </section>
   )
 }
 
