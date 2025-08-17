@@ -11,6 +11,8 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { store } from './store/store';
 import Layout from './components/layout';
+import Connections from './pages/Connections';
+import Requests from './pages/Requests';
 
 
 const router = createBrowserRouter([
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />
+      },
+      {
+        path: "connections",
+        element: <Connections />
+      },
+      {
+        path: "requests",
+        element: <Requests />
       }
     ]
   },

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { LogOut, UserRound } from 'lucide-react';
+import { LogOut, UserPlus, UserRound, Users } from 'lucide-react';
 
 import { Link, useNavigate } from "react-router"
 import toast from 'react-hot-toast';
@@ -42,9 +42,13 @@ const Header = () => {
                             <p className='text-white font-semibold text-lg'>{user.firstName}</p>
                         </div>
                         </PopoverTrigger>
-                        <PopoverContent className="w-40  bg-accent-foreground mr-5 border-primary flex flex-col p-0 overflow-hidden">
+                        <PopoverContent className="w-48  bg-accent-foreground mr-5 border-primary flex flex-col p-0 overflow-hidden">
                             <Link to={"/profile"} className='flex items-center gap-1 text-white font-semibold hover:bg-foreground py-3 px-2'>
                                 <UserRound />  Profile</Link>
+                            <Link to={"/connections"} className='flex items-center gap-1 text-white font-semibold hover:bg-foreground py-3 px-2'>
+                                <Users />  Connections</Link>
+                            <Link to={"/requests"} className='flex items-center gap-1 text-white font-semibold hover:bg-foreground py-3 px-2'>
+                                <UserPlus />  Requests</Link>
                             <p aria-label='button' onClick={handleLogout} className='flex items-center gap-1 text-white font-semibold hover:bg-foreground py-3 px-2 cursor-pointer'>
                                 <LogOut /> Logout</p>
                         </PopoverContent>

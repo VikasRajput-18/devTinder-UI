@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import Header from './header';
 import { Outlet, useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { axiosInstance } from '../axios/interceptor';
 import { addUser } from '../store/slices/userSlice';
 
 
 function Layout() {
-    const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -25,9 +24,7 @@ function Layout() {
     }
 
     useEffect(() => {
-        if (!user) {
-            fetchProfile()
-        }
+        fetchProfile()
     }, [])
 
     return (

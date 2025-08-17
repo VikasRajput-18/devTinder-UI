@@ -14,7 +14,6 @@ const Home = () => {
         try {
             setIsLoading(true)
             const response = await axiosInstance.get(`/api/user/feed`)
-            console.log(response)
             if (response.status === 200) {
                 dispatch(addFeed(response.data))
             }
@@ -37,12 +36,13 @@ const Home = () => {
         )
     }
 
+
     return (
         <section>
             <div className="flex items-center justify-center">
                 {
                     profiles?.users.slice(0, 1).map((profile) => {
-                        return <ProfileCard key={profile?._id} {...profile} />
+                        return <ProfileCard key={profile?._id} profile={profile} />
                     })
                 }
             </div>

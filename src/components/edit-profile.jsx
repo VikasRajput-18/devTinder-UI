@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Label } from './ui/label';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -31,7 +31,6 @@ const EditProfile = ({ user }) => {
         try {
             setIsLoading(true)
             const response = await axiosInstance.patch(`/api/profile/edit`, profileFormData);
-            console.log(response);
             if (response.status === 200) {
                 toast.success(response.data.message)
                 dispatch(addUser(response.data.user))
@@ -43,6 +42,17 @@ const EditProfile = ({ user }) => {
             setIsLoading(false)
         }
     }
+
+    useEffect(() => {
+        setProfileFormData({
+            firstName: user?.firstName || "",
+            lastName: user?.lastName || "",
+            photoUrl: user?.photoUrl || "",
+            bio: user?.bio || "",
+            gender: user?.gender || "",
+            age: user?.age || "",
+        })
+    }, [user])
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 items-start gap-4 justify-center px-8'>
@@ -125,7 +135,6 @@ const EditProfile = ({ user }) => {
                 </Button>
             </form>
 
-            {console.log("profileFormData", profileFormData)}
 
             <ProfilePreview profile={profileFormData} />
         </div>
