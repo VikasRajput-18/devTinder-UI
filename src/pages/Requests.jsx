@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addRequests, removeRequests } from "../store/slices/requestSlice";
 import { Button } from "../components/ui/button";
 import { toast } from "react-hot-toast"
+import RequestConnectionCard from "../components/request-connection-card";
 
 
 const Requests = () => {
@@ -56,32 +57,7 @@ const Requests = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch justify-center mt-10 gap-2">
                 {
                     requests.map((request) => {
-                        return <div key={request._id} className="flex items-start gap-2 text-white bg-accent-foreground p-2 rounded-md hover:opacity-80 transition-all duration-200 ease-in-out">
-                            <div className="w-20 h-20 rounded-full overflow-hidden">
-                                <img src={request.photoUrl} alt={request.firstName} className="w-full h-full rounded-full object-cover bg-card-foreground" />
-                            </div>
-                            <div className="flex-1">
-                                <span className="font-bold text-lg">{request.firstName}</span>
-                                <span className="font-bold text-lg pl-1">{request.lastName}</span>
-
-                                {request.age ? <p>Age : {request.age}</p> : null}
-                                {
-                                    request.gender ?
-                                        <p className="capitalize "><b>Gender :</b> {request.gender}</p>
-                                        : null
-                                }
-                                {request.bio ? <p className="line-clamp-2"><b>Bio :</b> {request.bio}</p> : null}
-
-                                <div className="flex items-center justify-end  w-full gap-x-2 my-2">
-                                    <Button disabled={isLoading} className="cursor-pointer" onClick={() => reviewRequest("rejected", request.connectionId)} variant="destructive">Reject</Button>
-                                    <Button
-                                        disabled={isLoading}
-                                        onClick={() => reviewRequest("accepted", request.connectionId)}
-                                        className="!bg-green-700 no-underline text-white cursor-pointer">Accept</Button>
-                                </div>
-
-                            </div>
-                        </div>
+                        return <RequestConnectionCard key={request._id} profile={request} isRequest={true} isLoading={isLoading} reviewRequest={reviewRequest} />
                     })
                 }
             </div>

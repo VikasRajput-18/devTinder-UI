@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { axiosInstance } from "../axios/interceptor"
 import { useDispatch, useSelector } from 'react-redux'
 import { addConnections } from "../store/slices/connectionSlice";
+import RequestConnectionCard from "../components/request-connection-card";
 
 const Connections = () => {
     const dispatch = useDispatch()
@@ -32,25 +33,7 @@ const Connections = () => {
 
                 {
                     connections.map((connection) => {
-                        return <div key={connection._id} className="flex items-start gap-2 text-white bg-accent-foreground p-2 rounded-md hover:opacity-80 transition-all duration-200 ease-in-out">
-                            <div className="w-20 h-20 rounded-full overflow-hidden">
-                                <img src={connection.photoUrl} alt={connection.firstName} className="w-full h-full rounded-full object-cover" />
-                            </div>
-                            <div className="flex-1">
-                                <span className="font-bold text-lg">{connection.firstName}</span>
-                                <span className="font-bold text-lg pl-1">{connection.lastName}</span>
-
-                                {connection.age ? <p>Age : {connection.age}</p> : null}
-                                {
-                                    connection.gender ?
-                                        <p className="capitalize "><b>Gender :</b> {connection.gender}</p>
-                                        : null
-                                }
-                                {connection.bio ? <p className="line-clamp-2"><b>Bio :</b> {connection.bio}</p> : null}
-
-
-                            </div>
-                        </div>
+                        return <RequestConnectionCard key={connection._id} profile={connection} />
                     })
                 }
             </div>
