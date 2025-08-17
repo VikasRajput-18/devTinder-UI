@@ -9,9 +9,9 @@ const requestSlice = createSlice({
         addRequests: (state, action) => {
             return action.payload
         },
-        removeRequests: () => {
-            return null
-        }
+        removeRequests: (state, action) => {
+            return state.filter((req) => req.connectionId !== action.payload);
+        },
     }
 })
 

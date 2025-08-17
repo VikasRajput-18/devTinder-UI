@@ -1,21 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { axiosInstance } from "../axios/interceptor"
 import { useDispatch, useSelector } from 'react-redux'
-import { addRequests } from "../store/slices/requestSlice";
+import { addRequests, removeRequests } from "../store/slices/requestSlice";
 import { Button } from "../components/ui/button";
+import { toast } from "react-hot-toast"
 
 
 const Requests = () => {
     const dispatch = useDispatch()
     const requests = useSelector((state) => state.requests)
 
+    const [isLoading, setIsLoading] = useState(false)
+
+    const reviewRequest = async (status, requestId) => {
+        try {
+            const response = await axiosInstance.post(`/api/request/review/${status}/${requestId}`);
+
+            if (response.status === 200) {
+                toast.success(response.data?.message);
+                dispatch(removeRequests(requestId));
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
+            console.error(error)
+        }
+    }
+
     const getRequests = async () => {
         try {
+            setIsLoading(true)
             const response = await axiosInstance.get(`/api/user/requests/received`);
-            const requestUser = response?.data?.data?.map((req) => req.senderId)
+            const requestUser = response?.data?.data?.map((req) => ({ ...req.senderId, connectionId: req._id }))
             dispatch(addRequests(requestUser))
         } catch (error) {
             console.error(error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -27,12 +47,13 @@ const Requests = () => {
     if (requests.length === 0) return <h2 className="text-center text-3xl font-semibold text-white">No Requests Found</h2>
 
 
+
+
     return (
         <div className="container px-8 mx-auto w-full">
             <h2 className="text-center text-3xl font-semibold text-white">Requests</h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-center mt-10">
-
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch justify-center mt-10 gap-2">
                 {
                     requests.map((request) => {
                         return <div key={request._id} className="flex items-start gap-2 text-white bg-accent-foreground p-2 rounded-md hover:opacity-80 transition-all duration-200 ease-in-out">
@@ -52,8 +73,11 @@ const Requests = () => {
                                 {request.bio ? <p className="line-clamp-2"><b>Bio :</b> {request.bio}</p> : null}
 
                                 <div className="flex items-center justify-end  w-full gap-x-2 my-2">
-                                    <Button className="cursor-pointer" variant="destructive">Reject</Button>
-                                    <Button className="!bg-green-700 no-underline text-white cursor-pointer">Accept</Button>
+                                    <Button disabled={isLoading} className="cursor-pointer" onClick={() => reviewRequest("rejected", request.connectionId)} variant="destructive">Reject</Button>
+                                    <Button
+                                        disabled={isLoading}
+                                        onClick={() => reviewRequest("accepted", request.connectionId)}
+                                        className="!bg-green-700 no-underline text-white cursor-pointer">Accept</Button>
                                 </div>
 
                             </div>
