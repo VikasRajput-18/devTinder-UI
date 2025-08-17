@@ -15,6 +15,11 @@ const Home = () => {
     const [connectionRequestLoading, setConnectionRequestLoading] = useState(false)
     const [exitDirection, setExitDirection] = useState(null)
 
+    // pagination state
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(null)
+    const limit = 10
+
     const sendConnectionRequest = async (status, receiverId) => {
         try {
             setConnectionRequestLoading(true)
@@ -26,9 +31,14 @@ const Home = () => {
             if (response.status === 201) {
                 toast.success(response.data?.message);
                 setTimeout(() => {
-                    dispatch(removeUserFromFeed(receiverId));
+                    dispatch(removeUserFromFeed(receiverId))
                     setExitDirection(null)
-                }, 400); // wait for animation before removing
+
+                    // 👇 when last profile removed, load next page
+                    if (profiles?.length === 1 && page < totalPages) {
+                        setPage(prev => prev + 1)
+                    }
+                }, 400)
             }
         } catch (error) {
             toast.error(error.response.data.message);
@@ -38,12 +48,18 @@ const Home = () => {
         }
     }
 
-    const getFeed = async () => {
+    const getFeed = async (currentPage = 1) => {
         try {
             setIsLoading(true)
-            const response = await axiosInstance.get(`/api/user/feed`)
+            const response = await axiosInstance.get(`/api/user/feed`, {
+                params: { page: currentPage, limit }
+            })
+
             if (response.status === 200) {
-                dispatch(addFeed(response.data?.users))
+                const { users, page, totalPages } = response.data
+                dispatch(addFeed(users))
+                setPage(page)
+                setTotalPages(totalPages)
             }
         } catch (error) {
             console.error(error)
@@ -53,35 +69,42 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getFeed()
+        getFeed(1) // initial fetch
     }, [])
 
-    if (isLoading) {
+    useEffect(() => {
+        if (page > 1) {
+            getFeed(page)
+        }
+    }, [page])
+
+    if (isLoading && profiles?.length === 0) {
         return (
             <div className="flex items-center justify-center">
                 <ProfileSkeleton />
             </div>
         )
     }
+    if (profiles?.length === 0 && !isLoading) {
+        return <h2 className="text-center text-3xl font-semibold text-white">No Profile Found</h2>
+    }
 
     return (
         <section>
             <div className="flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                    {
-                        profiles?.slice(0, 1).map((profile) => {
-                            return (
-                                <ProfileCard
-                                    key={profile?._id}
-                                    profile={profile}
-                                    onClick={sendConnectionRequest}
-                                    loading={connectionRequestLoading}
-                                    exitDirection={exitDirection}
-                                />
-                            )
-                        })
-                    }
-                </AnimatePresence>
+                {
+                    profiles?.length > 0 ?
+                        <AnimatePresence mode="wait">
+
+                            <ProfileCard
+                                key={profiles?.[0]?._id}
+                                profile={profiles?.[0]}
+                                onClick={sendConnectionRequest}
+                                loading={connectionRequestLoading}
+                                exitDirection={exitDirection}
+                            />
+                        </AnimatePresence> : null
+                }
             </div>
         </section>
     )
