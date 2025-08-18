@@ -90,8 +90,8 @@ const Home = () => {
     }
 
     return (
-        <section>
-            <div className="flex items-center justify-center">
+        <section className='w-full'>
+            <div className="w-full flex items-center justify-center">
                 {
                     profiles?.length > 0 ?
                         <AnimatePresence mode="wait">

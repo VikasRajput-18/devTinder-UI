@@ -55,10 +55,10 @@ const EditProfile = ({ user }) => {
     }, [user])
 
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-2 items-start gap-4 justify-center px-8'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 items-start gap-4 justify-center px-0 sm:px-8'>
             <form className="" onSubmit={handleSubmit} autoComplete='off'>
                 <div className="flex flex-col gap-6">
-                    <h2 className="w-full text-center text-3xl font-semibold text-white mb-4">🙎‍♂️ Update Profile</h2>
+                    <h2 className="w-full text-center text-xl sm:text-3xl font-semibold text-white mb-4">🙎‍♂️ Update Profile</h2>
                     <div className="grid gap-2 text-white">
                         <Label htmlFor="firstName">First Name</Label>
                         <Input

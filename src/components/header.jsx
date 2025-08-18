@@ -27,8 +27,8 @@ const Header = () => {
     }
 
     return (
-        <header className='py-4 bg-accent-foreground px-8 flex items-center justify-between'>
-            <h2 className='text-white text-3xl font-bold'>
+        <header className='py-4 bg-accent-foreground px-4 sm:px-8 flex items-center justify-between'>
+            <h2 className='text-white text-lg sm:text-3xl font-bold'>
                 <Link to={"/"}>👨‍💻Dev Tinder</Link>
             </h2>
 

@@ -51,8 +51,8 @@ const Requests = () => {
 
 
     return (
-        <div className="container px-8 mx-auto w-full">
-            <h2 className="text-center text-3xl font-semibold text-white">Requests</h2>
+        <div className="container sm:px-8 mx-auto w-full">
+            <h2 className="text-center text-xl sm:text-3xl font-semibold text-white">Requests</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch justify-center mt-10 gap-2">
                 {

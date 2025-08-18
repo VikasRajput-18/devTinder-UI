@@ -7,7 +7,7 @@ import {
 
 const ProfilePreview = ({ profile }) => {
     return (
-        <Card className="bg-accent-foreground  text-white border-neutral-600 shadow-2xl p-2 max-w-sm min-w-sm mt-10 mx-auto">
+        <Card className="bg-accent-foreground  text-white border-neutral-600 shadow-2xl p-2 max-w-sm sm:min-w-sm mt-10 mx-auto">
             <CardContent className="p-0">
                 <div className='group w-full '>
                     <div className='h-72 overflow-hidden rounded-md relative'>

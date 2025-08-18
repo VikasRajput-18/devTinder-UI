@@ -20,8 +20,9 @@ const ProfileCard = ({ profile, onClick, loading, exitDirection }) => {
                         : {}
             }
             transition={{ duration: 0.4 }}
+            className="w-full flex items-center justify-center"
         >
-            <Card className="bg-accent-foreground text-white border-neutral-600 shadow-2xl p-2 min-w-sm max-w-sm">
+            <Card className="bg-accent-foreground text-white border-neutral-600 shadow-2xl p-2 w-full sm:min-w-sm max-w-sm">
                 <CardContent className="p-0">
                     <div className='group w-full '>
                         <div className='h-72 overflow-hidden rounded-md relative'>
