@@ -15,7 +15,7 @@ const Header = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await axiosInstance.post(`/api/logout`);
+            const response = await axiosInstance.post(`/logout`);
             if (response.status === 200) {
                 dispatch(removeUser())
                 toast.success(response.data.message)

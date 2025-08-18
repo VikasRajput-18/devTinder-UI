@@ -26,7 +26,7 @@ const LoginForm = () => {
         e.preventDefault()
         setIsLoading(true)
         try {
-            const response = await axiosInstance.post(`/api/sign-in`, loginFormData)
+            const response = await axiosInstance.post(`/sign-in`, loginFormData)
 
             if (response.status === 200) {
                 toast.success(response.data.message)

@@ -15,7 +15,7 @@ const Requests = () => {
 
     const reviewRequest = async (status, requestId) => {
         try {
-            const response = await axiosInstance.post(`/api/request/review/${status}/${requestId}`);
+            const response = await axiosInstance.post(`/request/review/${status}/${requestId}`);
 
             if (response.status === 200) {
                 toast.success(response.data?.message);
@@ -30,7 +30,7 @@ const Requests = () => {
     const getRequests = async () => {
         try {
             setIsLoading(true)
-            const response = await axiosInstance.get(`/api/user/requests/received`);
+            const response = await axiosInstance.get(`/user/requests/received`);
             const requestUser = response?.data?.data?.map((req) => ({ ...req.senderId, connectionId: req._id }))
             dispatch(addRequests(requestUser))
         } catch (error) {

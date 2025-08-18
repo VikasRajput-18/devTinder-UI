@@ -30,7 +30,7 @@ const EditProfile = ({ user }) => {
         e.preventDefault()
         try {
             setIsLoading(true)
-            const response = await axiosInstance.patch(`/api/profile/edit`, profileFormData);
+            const response = await axiosInstance.patch(`/profile/edit`, profileFormData);
             if (response.status === 200) {
                 toast.success(response.data.message)
                 dispatch(addUser(response.data.user))

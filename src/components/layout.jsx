@@ -12,7 +12,7 @@ function Layout() {
 
     const fetchProfile = async () => {
         try {
-            const response = await axiosInstance.get(`/api/profile`)
+            const response = await axiosInstance.get(`/profile`)
             dispatch(addUser(response.data.user))
 
         } catch (error) {

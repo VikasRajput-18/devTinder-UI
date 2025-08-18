@@ -25,7 +25,7 @@ const RegisterForm = () => {
         e.preventDefault()
         setIsLoading(true)
         try {
-            const response = await axiosInstance.post(`/api/sign-up`, signupFormData)
+            const response = await axiosInstance.post(`/sign-up`, signupFormData)
 
             if (response.status === 201) {
                 toast.success(response.data.message)

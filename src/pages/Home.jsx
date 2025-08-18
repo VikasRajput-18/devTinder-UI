@@ -26,7 +26,7 @@ const Home = () => {
             // set direction for animation
             setExitDirection(status === "ignored" ? "left" : "right")
 
-            const response = await axiosInstance.post(`/api/request/send/${status}/${receiverId}`);
+            const response = await axiosInstance.post(`/request/send/${status}/${receiverId}`);
 
             if (response.status === 201) {
                 toast.success(response.data?.message);
@@ -51,7 +51,7 @@ const Home = () => {
     const getFeed = async (currentPage = 1) => {
         try {
             setIsLoading(true)
-            const response = await axiosInstance.get(`/api/user/feed`, {
+            const response = await axiosInstance.get(`/user/feed`, {
                 params: { page: currentPage, limit }
             })
 

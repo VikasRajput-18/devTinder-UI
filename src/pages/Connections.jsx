@@ -10,7 +10,7 @@ const Connections = () => {
 
     const getConnections = async () => {
         try {
-            const response = await axiosInstance.get(`/api/user/connections`);
+            const response = await axiosInstance.get(`/user/connections`);
             dispatch(addConnections(response.data.data))
         } catch (error) {
             console.error(error)
