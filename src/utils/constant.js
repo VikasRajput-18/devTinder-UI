@@ -1,1 +1,1 @@
-export const BASR_URL = "/api"
+export const BASR_URL = location.hostname === "localhost" ? "http://localhost:8000" :"/api"
