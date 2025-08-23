@@ -13,6 +13,7 @@ import { store } from './store/store';
 import Layout from './components/layout';
 import Connections from './pages/Connections';
 import Requests from './pages/Requests';
+import Chat from './pages/Chat';
 
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "requests",
         element: <Requests />
+      },
+      {
+        path: "chat/:targetUserId",
+        element: <Chat />
       }
     ]
   },

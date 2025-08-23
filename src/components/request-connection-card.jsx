@@ -1,6 +1,10 @@
+import { useNavigate } from 'react-router'
 import { Button } from './ui/button'
+import { MessageCircleHeart } from 'lucide-react'
 
 const RequestConnectionCard = ({ profile, isRequest, isLoading, reviewRequest }) => {
+    const navigate = useNavigate()
+
     return (
         <div key={profile._id} className="flex items-start gap-2 text-white bg-accent-foreground p-2 rounded-md hover:opacity-80 transition-all duration-200 ease-in-out">
             <div className="w-20 h-20 rounded-full overflow-hidden">
@@ -26,8 +30,14 @@ const RequestConnectionCard = ({ profile, isRequest, isLoading, reviewRequest })
                                 disabled={isLoading}
                                 onClick={() => reviewRequest("accepted", profile.connectionId)}
                                 className="!bg-green-700 no-underline text-white cursor-pointer">Accept</Button>
-                        </div> : null
+                        </div> :
+                        <div className='mt-4 flex justify-end'>
+                            <Button disabled={isLoading} className="cursor-pointer bg-green-600" onClick={() => navigate(`/chat/${profile._id}`)} >
+                                <MessageCircleHeart />
+                                Chat</Button>
+                        </div>
                 }
+
 
             </div>
         </div>
