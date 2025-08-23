@@ -3,8 +3,13 @@ import { BASE_URL } from "./constant"
 
 
 export const createSocketConnection = () => {
-    return io(BASE_URL);
-
+    if (location.hostname === "location") {
+        return io(BASE_URL, {
+            withCredentials: true
+        });
+    } else {
+        return io("/", { path: "/api/socket.io" })
+    }
 }
 
 

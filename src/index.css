@@ -118,3 +118,7 @@
     @apply bg-foreground text-foreground h-full w-full;
   }
 }
+
+.chat-scroll::-webkit-scrollbar {
+  display: none;
+}
