@@ -7,7 +7,7 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 const AuthForm = ({ title, description, routeTo }) => {
     return (
         <Card className="w-full bg-accent-foreground max-w-md text-white border-primary" >
-            <h2 className="text-center text-3xl font-bold">🧑‍💻Dev Tinder</h2>
+            <h2 className="text-center text-3xl font-bold">LinkUp 💖</h2>
             <CardHeader>
                 <CardTitle>{title}</CardTitle>
                 <CardDescription>{description}
