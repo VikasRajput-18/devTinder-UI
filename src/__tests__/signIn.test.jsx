@@ -130,6 +130,7 @@ describe("Login Component Testing", () => {
                 }
             }
         })
+        // SHA256:Mh9426EBw5p413Gp/dlkLDycx5QrMQyVm19AQSR0pdI 
 
         const emailInput = screen.getByLabelText(/email/i);
         const passwordInput = screen.getByLabelText(/password/i);
