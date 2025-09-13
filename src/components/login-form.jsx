@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -34,8 +34,12 @@ const LoginForm = () => {
                 navigate("/")
             }
         } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.message)
+            const message =
+                error?.response?.data?.message || // axios-like error
+                error?.message ||                 // plain Error
+                "Something went wrong";
+
+            toast.error(message);
         } finally {
             setIsLoading(false)
         }
@@ -51,10 +55,11 @@ const LoginForm = () => {
                         id="email"
                         type="email"
                         name="email"
-                        vaue={loginFormData.email}
+                        value={loginFormData.email}
                         onChange={handleChange}
                         placeholder="m@example.com"
-                        required disabled={isLoading} autoComplete="off"
+                        required
+                        disabled={isLoading} autoComplete="off"
 
                     />
                 </div>
@@ -70,7 +75,7 @@ const LoginForm = () => {
                     </div>
                     <Input id="password" type="password"
                         name="password"
-                        vaue={loginFormData.password}
+                        value={loginFormData.password}
                         onChange={handleChange}
                         placeholder="******" required disabled={isLoading} autoComplete="off" />
                 </div>
