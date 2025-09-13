@@ -1,5 +1,5 @@
 // Home.jsx
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { axiosInstance } from '../axios/interceptor'
 import { useDispatch, useSelector } from "react-redux"
 import { addFeed, removeUserFromFeed } from '../store/slices/feedSlice'
@@ -13,12 +13,17 @@ const Home = () => {
     const profiles = useSelector(state => state.feed)
     const [isLoading, setIsLoading] = useState(false);
     const [connectionRequestLoading, setConnectionRequestLoading] = useState(false)
-    const [exitDirection, setExitDirection] = useState(null)
+    const [exitDirection, setExitDirection] = useState(null);
+    const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
+
 
     // pagination state
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(null)
-    const limit = 10
+    const limit = 10;
+
+    // Track when we should fetch the next page
+    const shouldFetchRef = useRef(false)
 
     const sendConnectionRequest = async (status, receiverId) => {
         try {
@@ -35,7 +40,7 @@ const Home = () => {
                     setExitDirection(null)
 
                     // 👇 when last profile removed, load next page
-                    if (profiles?.length === 1 && page < totalPages) {
+                    if (profiles?.length <= 3 && page < totalPages && !isFetchingNextPage) {
                         setPage(prev => prev + 1)
                     }
                 }, 400)
@@ -50,7 +55,11 @@ const Home = () => {
 
     const getFeed = async (currentPage = 1) => {
         try {
-            setIsLoading(true)
+            if (currentPage > 1) {
+                setIsFetchingNextPage(true)
+            } else {
+                setIsLoading(true)
+            }
             const response = await axiosInstance.get(`/user/feed`, {
                 params: { page: currentPage, limit }
             })
@@ -60,11 +69,17 @@ const Home = () => {
                 dispatch(addFeed(users))
                 setPage(page)
                 setTotalPages(totalPages)
+
+                // Reset the fetch flag
+                shouldFetchRef.current = false
+
             }
         } catch (error) {
             console.error(error)
         } finally {
             setIsLoading(false)
+            setIsFetchingNextPage(false)
+
         }
     }
 
@@ -72,11 +87,14 @@ const Home = () => {
         getFeed(1) // initial fetch
     }, [])
 
+    // Check if we need to fetch more profiles when the profiles array changes
     useEffect(() => {
-        if (page > 1) {
-            getFeed(page)
+        // If we have less than 3 profiles and there are more pages to load
+        if (profiles?.length <= 3 && page < totalPages && !isFetchingNextPage && !shouldFetchRef.current) {
+            shouldFetchRef.current = true
+            setPage(prev => prev + 1)
         }
-    }, [page])
+    }, [profiles?.length, page, totalPages, isFetchingNextPage])
 
     if (isLoading && profiles?.length === 0) {
         return (
@@ -90,7 +108,7 @@ const Home = () => {
     }
 
     return (
-        <section className='w-full'>
+        <section className='w-full overflow-x-hidden'>
             <div className="w-full flex items-center justify-center">
                 {
                     profiles?.length > 0 ?
@@ -105,6 +123,11 @@ const Home = () => {
                             />
                         </AnimatePresence> : null
                 }
+                {isFetchingNextPage && (
+                    <div className="absolute bottom-4">
+                        <div className="text-white text-sm">Loading more profiles...</div>
+                    </div>
+                )}
             </div>
         </section>
     )

@@ -69,7 +69,7 @@ const Chat = () => {
 
 
     return (
-        <div className="flex flex-col h-[80vh] bg-gray-900 max-w-4xl rounded-md overflow-hidden">
+        <div className="flex flex-col h-[80vh] mx-auto bg-gray-900 max-w-4xl rounded-md overflow-hidden">
             {/* Header */}
             <div className="p-4 bg-neutral-900 text-white font-semibold shadow">
                 Chat
