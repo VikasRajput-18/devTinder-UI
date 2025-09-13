@@ -28,13 +28,18 @@ const RegisterForm = () => {
             const response = await axiosInstance.post(`/sign-up`, signupFormData)
 
             if (response.status === 201) {
+                setSignupFormData({
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    password: ""
+                })
                 toast.success(response.data.message)
                 navigate("/profile")
 
             }
         } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.message)
+            toast.error(error?.response?.data?.message)
         } finally {
             setIsLoading(false)
         }
@@ -54,6 +59,7 @@ const RegisterForm = () => {
                         onChange={handleChange}
                         placeholder="Jhon"
                         required disabled={isLoading}
+                        data-testid="firstName"
                     />
                 </div>
                 <div className="grid gap-2">
@@ -66,6 +72,8 @@ const RegisterForm = () => {
                         onChange={handleChange}
                         placeholder="Doe"
                         required disabled={isLoading}
+                        data-testid="lastName"
+
                     />
                 </div>
                 <div className="grid gap-2">
